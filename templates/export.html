@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <title>Emogo Dashboard / Export</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <main class="container">
+      <h1>Exported Items</h1>
+      <p class="actions"><a class="btn" href="/export.csv">Download CSV</a></p>
+      <table>
+        <thead>
+          <tr>
+            <th>_id</th>
+            <th>user_id</th>
+            <th>score</th>
+            <th>video_url</th>
+            <th>latitude</th>
+            <th>longitude</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for it in items %}
+          <tr>
+            <td>{{ it.get('_id') }}</td>
+            <td>{{ it.get('user_id') or it.get('userid') or it.get('user') or '' }}</td>
+            <td>{{ it.get('score') }}</td>
+            <td>
+              {% if it.get('video_url') %}
+                <a href="{{ it.get('video_url') }}" target="_blank">{{ it.get('video_url') }}</a>
+              {% elif it.get('video') %}
+                <a href="{{ it.get('video') }}" target="_blank">{{ it.get('video') }}</a>
+              {% elif it.get('videoUrl') %}
+                <a href="{{ it.get('videoUrl') }}" target="_blank">{{ it.get('videoUrl') }}</a>
+              {% else %}
+                
+              {% endif %}
+            </td>
+            <td>{{ it.get('latitude', '') }}</td>
+            <td>{{ it.get('longitude', '') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <footer><small>Exported from Emogo backend</small></footer>
+    </main>
+  </body>
+</html>
